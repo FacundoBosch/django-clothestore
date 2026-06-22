@@ -38,6 +38,13 @@
                         <td class="cell">{{ item.desc }}</td>
                         <td class="cell">{{ item.stock }}</td>
                         <td class="cell">${{ item.price }}</td>
+                        <td class="cell">
+                            {% if item.img %}
+                                <a href="{% url 'management:panel_ropas_imagen' item.id %}" target="_blank">url</a>
+                            {% else %}
+                                None
+                            {% endif %}
+                        </td>
                         <td class="cell">{{ item.active }}</td>
                         <td class="cell">{{ item.categoria }}</td>
                         <td class="cell">

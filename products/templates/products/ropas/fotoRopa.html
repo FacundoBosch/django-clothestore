@@ -1,0 +1,10 @@
+{% extends 'products/base.html' %}
+
+{% block title %}Imagen de {{ ropa.name }}{% endblock %}
+{% block extra_css %}
+    {% load static %}
+{% endblock %}
+
+{% block content %}
+    <img src="{{ ropa.img.url }}" alt="imagen" style="width: 50%; height: 80%; object-fit: contain; ">
+{% endblock %}

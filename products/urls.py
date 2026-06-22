@@ -11,5 +11,6 @@ urlpatterns = [
 
     path('ropas', views.panel_ropas, name='panel_ropas'),
     path('ropas/add', views.panel_ropas_add, name='panel_ropas_add'),
-    path('ropas/editar/<int:cid>', views.panel_ropas_edit, name='panel_ropas_edit'),
+    path('ropas/editar/<int:rid>', views.panel_ropas_edit, name='panel_ropas_edit'),
+    path('ropas/imagen/<int:rid>', views.panel_ropas_imagen, name='panel_ropas_imagen'),
 ]

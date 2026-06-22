@@ -3,9 +3,30 @@
 {% block title %}ClotheStore{% endblock %}
 {% block extra_css %}
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/management/productMainpanel.css' %}">
+    <link rel="stylesheet" href="{% static 'css/open/landingPage.css' %}">
 {% endblock %}
 
 {% block content %}
-<h1>hola</h1>
+<div class="main-container">
+    <div class="top-container">
+        <div class="tc-title">
+            <h1>Bienvenido a la página oficial de ClotheStore</h1>
+        </div>
+        <div class="tc-main">
+            <div class="tcm-title">
+                <h3>Filtros</h3>
+            </div>
+            <div class="tcm-content">
+                1 2 3 4 y más filtros
+            </div>
+        </div>
+    </div>
+    <div class="content-container">
+        {% for item in ropas %}
+            <div class="productcard">
+                <p>{{ item.name }}</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}

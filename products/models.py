@@ -19,6 +19,7 @@ class Ropa(models.Model):
     desc = models.CharField(max_length=250, null=True, blank=True)
     stock = models.IntegerField(null=False, blank=True, default=0)
     price = models.FloatField(null=True, blank=True)
+    img = models.ImageField(upload_to='ropa_fotos/', null=True, blank=True)
     active = models.BooleanField(default=True)
 
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, related_name='ropas', null=True, blank=False)

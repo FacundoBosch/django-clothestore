@@ -69,7 +69,7 @@ def panel_categorias_edit(request, cid):
 
 def panel_ropas(request):
 
-    ropas = Ropa.objects.all().order_by('name')
+    ropas = Ropa.objects.all().order_by('id')
     
     # trae el valor de q, y si no existe trae null
     filter = request.GET.get('q', '')
@@ -95,7 +95,7 @@ def panel_ropas_add(request):
 
     if request.method == "POST":
 
-        form = ropaForm(request.POST)
+        form = ropaForm(request.POST, request.FILES)
         if form.is_valid():
             ropa = form.save()
             return redirect('management:panel_ropas')
@@ -104,14 +104,14 @@ def panel_ropas_add(request):
         form = ropaForm()
         return render(request, 'products/ropas/addeditRopas.html', {'form': form, 'type': type})
 
-def panel_ropas_edit(request, cid):
+def panel_ropas_edit(request, rid):
 
     type = 'Editar'
-    ropa = Ropa.objects.filter(id = cid).first()
+    ropa = Ropa.objects.filter(id = rid).first()
 
     if request.method == 'POST':
 
-        form = ropaForm(request.POST, instance=ropa)
+        form = ropaForm(request.POST, request.FILES, instance=ropa)
         if form.is_valid():
             ropa = form.save()
             return redirect('management:panel_ropas')
@@ -121,3 +121,7 @@ def panel_ropas_edit(request, cid):
         form = ropaForm(instance=ropa)
         return render(request, 'products/ropas/addeditRopas.html', {'form': form, 'type': type})
 
+def panel_ropas_imagen(request, rid):
+
+    ropa = Ropa.objects.filter(id = rid).first()
+    return render(request, 'products/ropas/fotoRopa.html', {'ropa': ropa})

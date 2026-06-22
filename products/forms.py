@@ -11,4 +11,4 @@ class ropaForm(forms.ModelForm):
 
     class Meta:
         model = Ropa
-        fields = ['name', 'desc', 'categoria', 'stock', 'price', 'active']
+        fields = ['name', 'desc', 'categoria', 'stock', 'price', 'img', 'active']
