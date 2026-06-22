@@ -1,0 +1,12 @@
+{% extends 'products/base.html' %}
+
+{% block title %}Management Panel{% endblock %}
+{% block extra_css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/management/productMainpanel.css' %}">
+{% endblock %}
+
+{% block content %}
+    <a href="{% url 'management:panel_categorias' %}"><button>Categorías</button></a>
+    <a href="{% url 'management:panel_ropas' %}"><button>Ropas</button></a>
+{% endblock %}

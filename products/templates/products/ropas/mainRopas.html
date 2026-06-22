@@ -1,0 +1,77 @@
+{% extends 'products/base.html' %}
+
+{% block title %}Management Panel - Ropas{% endblock %}
+{% block extra_css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/management/mainProduct.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="cat-container">
+    <div class="top-content">
+        <div>
+            <h2>Ropas</h2>
+        </div>
+        <div class="action-btns">
+            <div>
+                <form method="GET">
+                    <input type="text" name="q" placeholder="Filtrar por nombre..." value="{{ filtro | default:'' }}">
+                    <button type="submit">Filtrar</button>
+                </form>
+            </div>
+            <a href="{% url 'management:panel_ropas_add' %}"><button>Agregar nueva</button></a>
+        </div>
+    </div>
+    <div class="low-content">
+        <table class="table">
+            <thead>
+                {% for attribute in keys %}
+                    <th class="cell head-cell">{{ attribute }}</th>
+                {% endfor %}
+                    <th class="cell head-cell">Acciones</th>
+            </thead>
+            <tbody>
+                {% for item in ropas %}
+                    <tr>
+                        <td class="cell">{{ item.id }}</td>
+                        <td class="cell">{{ item.name }}</td>
+                        <td class="cell">{{ item.desc }}</td>
+                        <td class="cell">{{ item.stock }}</td>
+                        <td class="cell">${{ item.price }}</td>
+                        <td class="cell">{{ item.active }}</td>
+                        <td class="cell">{{ item.categoria }}</td>
+                        <td class="cell">
+                            <a href="{% url 'management:panel_ropas_edit' item.id %}"><button>Editar</button></a>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr><td colspan="4">No hay categorías disponibles.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="pagination">
+            <span class="pag-movimiento">
+                {% if ropas.has_previous %}
+                    <a href="?q={{ filtro }}&page=1"><button>Primera</button></a>
+                    <a href="?q={{ filtro }}&page={{ ropas.previous_page_number }}"><button>Anterior</button></a>
+                {% endif %}
+
+                {% if ropas.paginator.num_pages > 1 %}
+                <span class="current">
+                    Página {{ ropas.number }} de {{ ropas.paginator.num_pages }}
+                </span>
+                {% else %}
+                <span class="current">
+                    Única página
+                </span>
+                {% endif %}
+
+                {% if ropas.has_next %}
+                    <a href="?q={{ filtro }}&page={{ ropas.next_page_number }}"><button>Siguiente</button></a>
+                    <a href="?q={{ filtro }}&page={{ ropas.paginator.num_pages }}"><button>Última</button></a>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/management/productHeader.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <header class="header">
+        <div class="header-elements">
+            <a href="{% url 'open:landing_page' %}">Home</a>
+            <a href="{% url 'management:main_panel' %}">Management</a>
+        </div>
+        <div>Product Management Module - ClotheStore</div>
+    </header>
+    <div class="full-container">
+        <div class="mainPanel-container">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+</body>
+</html>

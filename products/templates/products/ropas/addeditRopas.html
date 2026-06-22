@@ -1,0 +1,19 @@
+{% extends 'products/base.html' %}
+<!-- TYPE es una variable para poder modificar la funcionalidad del componente, puede ser editar o agregar -->
+{% block title %}Ropas - {{ type }}{% endblock %}
+{% block extra_css %}
+    {% load static %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Ropas - {{ type }}</h1>
+    <div class="form">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">{{ type }}</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+body {
+    margin: 0;
+    font-family: Roboto;
+}
+
+.header {
+    width: 100%;
+    height: 4rem;
+    background-color: cornflowerblue;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5rem;
+    box-sizing: border-box;
+}
+
+.full-container {
+    background-color: azure;
+    width: 100%;
+    height: calc(100vh - 4rem);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
