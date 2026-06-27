@@ -59,6 +59,10 @@
     font-size: large;
 }
 
+.cell-desc {
+    font-size: small;
+}
+
 .pagination {
     display: flex;
     justify-content: center;

@@ -5,14 +5,7 @@ class Categoria(models.Model):
     active = models.BooleanField(default=True)
 
     def __str__(self):
-
-        estado = ''
-        if self.active:
-            estado = 'Activa'
-        else:
-            estado = 'Inactiva'
-
-        return f'{self.name} - {estado}'
+        return f'{self.name}'
     
 class Ropa(models.Model):
     name = models.CharField(max_length=100, null=False, blank=False)

@@ -75,7 +75,7 @@ def panel_ropas(request):
     filter = request.GET.get('q', '')
     
     # para display una cantidad x de elementos por página
-    elemsPorPagina = 10
+    elemsPorPagina = 15
     paginator = Paginator(ropas, elemsPorPagina)
     pagActual = request.GET.get('page', 1)
     

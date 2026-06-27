@@ -2,8 +2,9 @@
 
 {% block title %}ClotheStore{% endblock %}
 {% block extra_css %}
-    {% load static %}
+{% load static %}
     <link rel="stylesheet" href="{% static 'css/open/landingPage.css' %}">
+    <link rel="stylesheet" href="{% static 'css/open/productcards.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -17,16 +18,77 @@
                 <h3>Filtros</h3>
             </div>
             <div class="tcm-content">
-                1 2 3 4 y más filtros
+                <form method="GET" class="tcm-content">
+                    <div>
+                        <label for="cat">Categoría</label>
+                        <select name="cat">
+                            <option value="" {% if filtercat == '' %} selected {% endif %}>-- Sin filtro</option>
+                            {% for item in cats %}
+                            <option value="{{ item.id }}" {% if filtercat == item.id|slugify %} selected {% endif %}>{{ item.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div>
+                        <label for="price">Precio</label>
+                        <select name="price">
+                            <option value="" {% if filterprice == '' %} selected {% endif %}>-- Sin filtro</option>
+                            <option value="0-25000" {% if filterprice == '0-25000' %} selected {% endif %}>Menos de $25.000</option>
+                            <option value="25001-75000" {% if filterprice == '25001-75000' %} selected {% endif %}>$25.000 - $75.000</option>
+                            <option value="75001-150000" {% if filterprice == '75001-150000' %} selected {% endif %}>$75.000 - $150.000</option>
+                            <option value="150001-x" {% if filterprice == '150001-x' %} selected {% endif %}>Más de $150.000</option>
+                        </select>
+                    </div>
+                    <div>
+                        <button type="submit">Aplicar filtros</button>
+                        <a href="{% url 'open:landing_page' %}"><button type="button">Limpiar filtros</button></a>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
     <div class="content-container">
-        {% for item in ropas %}
-            <div class="productcard">
-                <p>{{ item.name }}</p>
-            </div>
-        {% endfor %}
+        <div class="products-container">
+            {% for item in ropas %}
+                <div class="productcard">
+                    <div class="pc-img">
+                        {% if item.img %}
+                            <img src="{{item.img.url}}" alt="imagen">
+                        {% else %}
+                            <p>Sin imagen</p>
+                        {% endif %}
+                    </div>
+                    <div class="pc-data">
+                        <h2>{{ item.name }}</h2>
+                        <p>$ {{ item.price }}</p>
+                        <p>{% if item.stock > 0 %}Unidades: {{ item.stock }}{% else %}Sin stock!{% endif %}</p>
+                        <button>Ver detalles</button>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="pag-container">
+            <span class="pag-movimiento">
+                {% if ropas.has_previous %}
+                    <a href="?page=1&cat={{ filtercat }}&price={{ filterprice }}"><button>Primera</button></a>
+                    <a href="?page={{ ropas.previous_page_number }}&cat={{ filtercat }}&price={{ filterprice }}"><button>Anterior</button></a>
+                {% endif %}
+
+                {% if ropas.paginator.num_pages > 1 %}
+                <span class="current">
+                    Página {{ ropas.number }} de {{ ropas.paginator.num_pages }}
+                </span>
+                {% else %}
+                <span class="current">
+                    Única página
+                </span>
+                {% endif %}
+
+                {% if ropas.has_next %}
+                    <a href="?page={{ ropas.next_page_number }}&cat={{ filtercat }}&price={{ filterprice }}"><button>Siguiente</button></a>
+                    <a href="?page={{ ropas.paginator.num_pages }}&cat={{ filtercat }}&price={{ filterprice }}"><button>Última</button></a>
+                {% endif %}
+            </span>
+        </div>
     </div>
 </div>
 {% endblock %}
