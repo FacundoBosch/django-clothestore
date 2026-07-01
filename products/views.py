@@ -2,14 +2,24 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.core.paginator import Paginator
 
+# para controlar que un user esté loggeado
+from django.contrib.auth.decorators import login_required
+# decorator personalizado para restringir acceso a usuarios de X roles / grupos
+from users.decorators import allowed_users, admin_only
+
 from .models import Categoria, Ropa
 from .forms import categoriaForm, ropaForm
 
+#@allowed_users(allowed_roles=['admins']) # se pone debajo del login_required, y se pasa en el array el nombre de/los grupo/s 
+@login_required(login_url='user:user_login') # poner esto arriba de cada view restringida
+@admin_only
 def main_panel(request):
     return render(request, 'products/mainPanel.html')
 
 ### COMIENZA LA SECCIÓN DE CATEGORIAS
 
+@login_required(login_url='user:user_login')
+@admin_only
 def panel_categorias(request):
 
     categorias = Categoria.objects.all().order_by('name')
@@ -32,6 +42,8 @@ def panel_categorias(request):
     attributes = [field.name for field in Categoria._meta.get_fields() if not (field.is_relation and field.auto_created)]
     return render(request, 'products/categorias/mainCategorias.html', {'categorias': elemsPaginaActual, 'keys': attributes, 'filtro': filter})
 
+@login_required(login_url='user:user_login')
+@admin_only
 def panel_categorias_add(request):
 
     type = 'Agregar'
@@ -47,6 +59,8 @@ def panel_categorias_add(request):
         form = categoriaForm()
         return render(request, 'products/categorias/addeditCategorias.html', {'form': form, 'type': type})
 
+@login_required(login_url='user:user_login')
+@admin_only
 def panel_categorias_edit(request, cid):
 
     type = 'Editar'
@@ -67,6 +81,8 @@ def panel_categorias_edit(request, cid):
 ### TERMINA LA SECCIÓN DE CATEGORIAS
 ### COMIENZA LA SECCIÓN DE ROPAS
 
+@login_required(login_url='user:user_login')
+@admin_only
 def panel_ropas(request):
 
     ropas = Ropa.objects.all().order_by('id')
@@ -89,6 +105,8 @@ def panel_ropas(request):
     attributes = [field.name for field in Ropa._meta.get_fields() if not (field.is_relation and field.auto_created)]
     return render(request, 'products/ropas/mainRopas.html', {'ropas': elemsPaginaActual, 'keys': attributes, 'filtro': filter})
 
+@login_required(login_url='user:user_login')
+@admin_only
 def panel_ropas_add(request):
 
     type = 'Agregar'
@@ -104,6 +122,8 @@ def panel_ropas_add(request):
         form = ropaForm()
         return render(request, 'products/ropas/addeditRopas.html', {'form': form, 'type': type})
 
+@login_required(login_url='user:user_login')
+@admin_only
 def panel_ropas_edit(request, rid):
 
     type = 'Editar'
@@ -121,6 +141,8 @@ def panel_ropas_edit(request, rid):
         form = ropaForm(instance=ropa)
         return render(request, 'products/ropas/addeditRopas.html', {'form': form, 'type': type})
 
+@login_required(login_url='user:user_login')
+@admin_only
 def panel_ropas_imagen(request, rid):
 
     ropa = Ropa.objects.filter(id = rid).first()

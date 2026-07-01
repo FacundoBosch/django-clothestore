@@ -15,6 +15,10 @@
             <a href="{% url 'management:main_panel' %}">Management</a>
         </div>
         <div>Product Management Module - ClotheStore</div>
+        <div>
+            <span>Hola, {{ request.user }}</span>
+            <span><a href="{% url 'user:user_logout' %}">Salir</a></span>
+        </div>
     </header>
     <div class="full-container">
         <div class="mainPanel-container">

@@ -12,12 +12,41 @@
     <header class="header">
         <div class="header-elements">
             <a href="{% url 'open:landing_page' %}">Home</a>
-            <a href="{% url 'management:main_panel' %}">Management</a>
+            {% if request.user.is_admin %}
+                <a href="{% url 'management:main_panel' %}">Management</a>
+            {% endif %}
         </div>
         <div>ClotheStore Official Website</div>
+        <div>
+            {% if request.user.is_authenticated %}
+                <span>Hola, {{ request.user }}</span>
+                <span><a href="{% url 'user:user_logout' %}">Salir</a></span>
+            {% else %}
+                <span><a href="{% url 'user:user_login' %}">Iniciar sesión</a></span>
+                <span><a href="{% url 'user:user_register' %}">Registrarse</a></span>
+            {% endif %}
+        </div>
     </header>
+    {% if messages %}
+        <div id="popup">
+            {% for message in messages %}
+                <p id="messages">{{ message }}</p>
+            {% endfor %}
+            <span id="cerrar-btn">X</span>
+        </div>
+    {% endif %}
     <div class="full-container">
         {% block content %}{% endblock %}
     </div>
+    <script>
+
+        btn = document.getElementById('cerrar-btn');
+        btn.addEventListener('click', (event) => {cerrar()});
+
+        function cerrar(){
+            item = document.getElementById('popup');
+            item.style.display = 'none'
+        }
+    </script>
 </body>
 </html>
